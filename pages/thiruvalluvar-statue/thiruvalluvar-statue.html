@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Explore Kanyakumari — Thiruvalluvar Statue</title>
+<style>
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+:root{
+  --bg:#FFFFFF;
+  --bg-soft:#F8FAFC;
+  --primary:#0EA5E9;
+  --primary-2:#0284C7;
+  --secondary:#14B8A6;
+  --accent:#F59E0B;
+  --text:#111827;
+  --muted:#4B5563;
+  --line:rgba(17,24,39,.08);
+  --radius:24px;
+  --radius-sm:14px;
+  --shadow-sm:0 2px 8px rgba(15,23,42,.05);
+  --shadow:0 10px 30px rgba(15,23,42,.08);
+  --shadow-lg:0 20px 60px rgba(15,23,42,.14);
+  --grad-primary:linear-gradient(135deg,#0EA5E9 0%,#14B8A6 100%);
+  --grad-accent:linear-gradient(135deg,#F59E0B 0%,#F97316 100%);
+  --grad-hero:linear-gradient(180deg,rgba(2,20,40,0) 0%,rgba(2,20,40,.15) 45%,rgba(2,20,40,.75) 100%);
+  --font:'SF Pro Display','Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+/* =========================================================
+   RESET
+========================================================= */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:0;background:none;color:inherit}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{margin:0;letter-spacing:-.01em;line-height:1.15}
+p{margin:0 0 .9em}
+:focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:8px}
+
+/* =========================================================
+   LAYOUT
+========================================================= */
+.wrap{max-width:520px;margin:0 auto;position:relative}
+section{padding:36px 20px;position:relative}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px}
+.section-title{font-size:clamp(22px,6vw,28px);font-weight:800}
+.section-title small{display:block;color:var(--primary);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px}
+.view-all{color:var(--primary);font-weight:600;font-size:13px;display:inline-flex;align-items:center;gap:4px}
+
+/* =========================================================
+   SCROLL PROGRESS
+========================================================= */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:transparent}
+.progress__bar{height:100%;width:0;background:var(--grad-primary);transition:width .1s linear}
+
+/* =========================================================
+   HEADER
+========================================================= */
+.header{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s,box-shadow .3s;
+}
+.header.scrolled{border-color:var(--line);box-shadow:var(--shadow-sm)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand__logo{width:36px;height:36px;border-radius:10px;background:var(--grad-primary);display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
+.brand__logo svg{width:20px;height:20px}
+.brand__text small{display:block;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.brand__text strong{font-size:16px;font-weight:800;color:var(--primary-2)}
+.lang{
+  position:relative;
+  display:flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;
+  font-weight:600;font-size:13px;color:var(--primary-2);
+}
+.lang svg{width:16px;height:16px}
+.lang select{
+  position:absolute;inset:0;opacity:0;cursor:pointer;font-size:16px;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+.hero{position:relative;height:78vh;min-height:560px;max-height:780px;overflow:hidden;border-radius:0 0 32px 32px}
+.hero__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:zoomOut 12s ease-out forwards}
+@keyframes zoomOut{to{transform:scale(1)}}
+.hero__overlay{position:absolute;inset:0;background:var(--grad-hero)}
+.hero__content{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 62px;color:#fff}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.02em}
+.chip--loc{background:rgba(0,0,0,.4);color:#fff;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}
+.chip--loc svg{width:14px;height:14px}
+.badges{display:flex;gap:8px;margin:14px 0 12px;flex-wrap:wrap}
+.badge{padding:7px 14px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff}
+.badge--mon{background:var(--primary)}
+.badge--wis{background:var(--accent)}
+.hero__title{font-size:clamp(40px,11vw,56px);font-weight:800;line-height:1;letter-spacing:-.02em;margin:6px 0 12px;font-family:Georgia,'SF Pro Display',serif;text-shadow:0 4px 24px rgba(0,0,0,.35);animation:fadeUp .9s .3s both}
+.hero__sub{font-size:15px;opacity:.92;max-width:26ch;animation:fadeUp .9s .5s both}
+.hero__meta{display:flex;align-items:center;gap:18px;margin-top:22px;flex-wrap:wrap;animation:fadeUp .9s .7s both}
+.meta{display:flex;align-items:center;gap:8px;font-size:13px;color:#fff}
+.meta__ico{width:34px;height:34px;border-radius:10px;background:rgba(255,255,255,.14);display:grid;place-items:center;backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2)}
+.meta__ico svg{width:17px;height:17px}
+.meta small{display:block;font-size:11px;opacity:.75}
+.meta strong{font-weight:600}
+.scroll-hint{position:absolute;right:20px;bottom:110px;width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;box-shadow:var(--shadow-lg);animation:bob 2.2s ease-in-out infinite}
+.scroll-hint svg{width:20px;height:20px;color:var(--primary)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* =========================================================
+   AUDIO PLAYER
+========================================================= */
+.audio{
+  margin:-40px 16px 0;position:relative;z-index:5;
+  background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border:1px solid var(--line);border-radius:22px;padding:14px 16px;box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;gap:12px;
+}
+.audio__ico{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:var(--bg-soft);display:grid;place-items:center;color:var(--primary)}
+.audio__ico svg{width:22px;height:22px}
+.audio__main{flex:1;min-width:0}
+.audio__row{display:flex;align-items:center;gap:8px;font-size:13px}
+.audio__title{font-weight:700;font-size:14px;margin-bottom:4px}
+.audio__title span{color:var(--muted);font-weight:500;margin-left:4px}
+.wave{display:flex;align-items:end;gap:2px;height:22px;overflow:hidden;margin:2px 0 4px}
+.wave i{display:block;width:2px;background:linear-gradient(180deg,var(--primary),var(--accent));border-radius:2px;transition:height .15s}
+.audio__times{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;margin-top:2px}
+.audio__bar{height:4px;background:var(--bg-soft);border-radius:4px;overflow:hidden;margin-top:4px;position:relative;cursor:pointer}
+.audio__fill{height:100%;width:0;background:var(--grad-primary);border-radius:4px;transition:width .2s}
+.audio__ctrls{display:flex;align-items:center;gap:6px}
+.iconbtn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--text);transition:background .2s,transform .15s}
+.iconbtn:hover{background:var(--bg-soft)}
+.iconbtn:active{transform:scale(.94)}
+.iconbtn svg{width:20px;height:20px}
+.playbtn{width:48px;height:48px;background:var(--primary);color:#fff;border-radius:50%;box-shadow:0 8px 24px rgba(14,165,233,.4)}
+.playbtn:hover{background:var(--primary-2)}
+.playbtn svg{width:22px;height:22px}
+.speed{
+  padding:6px 12px;border-radius:999px;background:var(--bg-soft);font-size:12px;font-weight:700;color:var(--text);
+  min-width:44px;
+}
+.audio__note{display:none;margin:10px 16px 0;padding:10px 14px;border-radius:14px;background:#FFF7ED;color:#9A3412;font-size:12px;border:1px solid #FED7AA}
+.audio__note.show{display:block}
+
+/* =========================================================
+   QUICK FACTS
+========================================================= */
+.qf{display:flex;gap:12px;overflow-x:auto;padding:4px 20px 12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.qf::-webkit-scrollbar{display:none}
+.qf__card{
+  flex:0 0 auto;width:150px;min-height:130px;background:#fff;border:1px solid var(--line);
+  border-radius:20px;padding:14px;box-shadow:var(--shadow-sm);scroll-snap-align:start;
+  display:flex;flex-direction:column;gap:6px;transition:transform .2s,box-shadow .2s;
+}
+.qf__card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.qf__ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff}
+.qf__ico svg{width:20px;height:20px}
+.qf__label{font-size:12px;color:var(--muted);font-weight:500}
+.qf__value{font-size:22px;font-weight:800;line-height:1.05}
+.qf__unit{font-size:12px;color:var(--muted);font-weight:500}
+
+/* =========================================================
+   STORY / OVERVIEW
+========================================================= */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+.story{display:flex;gap:18px;align-items:flex-start}
+.story__text{flex:1;min-width:0}
+.story__text p{font-size:15px;color:var(--muted)}
+.dropcap::first-letter{
+  font-family:Georgia,serif;float:left;font-size:56px;line-height:.85;padding:6px 10px 0 0;
+  color:var(--primary);font-weight:800;
+}
+.story__img{width:118px;height:158px;border-radius:16px;object-fit:cover;flex:0 0 auto;box-shadow:var(--shadow)}
+
+/* =========================================================
+   TABS
+========================================================= */
+.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding:16px 8px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);align-items:start}
+.tab{display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 1px;border-radius:14px;position:relative;transition:background .2s;min-width:0;overflow:hidden}
+.tab svg{width:32px;height:32px;flex-shrink:0}
+.tab span{font-size:10px;font-weight:600;line-height:1;text-align:center;min-height:14px;display:flex;align-items:center;justify-content:center;width:100%;white-space:nowrap;letter-spacing:-.02em;padding:0}
+.tab::after{content:"";position:absolute;bottom:2px;left:20%;right:20%;height:2px;border-radius:2px;background:currentColor;opacity:.9}
+.tab.c1{color:#0EA5E9}.tab.c2{color:#3B82F6}.tab.c3{color:#F97316}
+.tab.c4{color:#14B8A6}.tab.c5{color:#8B5CF6}.tab.c6{color:#F59E0B}
+
+/* =========================================================
+   FACTS
+========================================================= */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fact{
+  background:var(--bg-soft);border-radius:16px;padding:14px 10px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:8px;min-height:150px;
+  transition:transform .25s,box-shadow .25s;border:1px solid transparent;
+}
+.fact:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--line)}
+.fact__ico{width:44px;height:44px;display:grid;place-items:center}
+.fact__ico svg{width:32px;height:32px}
+.fact p{font-size:11.5px;color:var(--text);line-height:1.35;margin:0;font-weight:500}
+
+/* =========================================================
+   DID YOU KNOW - FLIP CARDS
+========================================================= */
+.dyk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.flip{perspective:1000px;height:150px;cursor:pointer}
+.flip__inner{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.flip.on .flip__inner{transform:rotateY(180deg)}
+.flip__face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:18px;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
+.flip__front{background:linear-gradient(135deg,#F0F9FF,#E0F2FE);border:1px solid rgba(14,165,233,.15)}
+.flip__front strong{font-size:14px;color:var(--primary-2)}
+.flip__front small{font-size:11px;color:var(--muted)}
+.flip__back{background:var(--grad-primary);color:#fff;transform:rotateY(180deg);font-size:13px;line-height:1.4}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:"";position:absolute;left:14px;top:6px;bottom:6px;width:2px;background:linear-gradient(180deg,var(--primary),var(--secondary),var(--accent))}
+.tl{position:relative;padding:0 0 22px}
+.tl::before{content:"";position:absolute;left:-30px;top:4px;width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--primary);box-shadow:0 0 0 4px rgba(14,165,233,.15)}
+.tl__year{font-size:11px;font-weight:800;color:var(--primary);letter-spacing:.1em;text-transform:uppercase}
+.tl__title{font-size:15px;font-weight:700;margin:2px 0 4px}
+.tl__desc{font-size:13px;color:var(--muted);margin:0}
+
+/* =========================================================
+   GALLERY
+========================================================= */
+.gallery{display:flex;gap:10px}
+.gallery__col{display:flex;flex-direction:column;gap:10px;flex:1;min-width:0}
+.g{border-radius:18px;overflow:hidden;position:relative;aspect-ratio:1;background:var(--bg-soft)}
+.g.tall{aspect-ratio:1/1.4}
+.g img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.g:hover img{transform:scale(1.08)}
+
+/* =========================================================
+   TIPS
+========================================================= */
+.tips{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tip{
+  background:rgba(255,255,255,.7);backdrop-filter:blur(14px);
+  border:1px solid var(--line);border-radius:20px;padding:16px;
+  box-shadow:var(--shadow-sm);
+}
+.tip__ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff;margin-bottom:10px}
+.tip__ico svg{width:22px;height:22px}
+.tip h4{font-size:13.5px;margin:0 0 4px}
+.tip p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+
+/* =========================================================
+   NEARBY
+========================================================= */
+.nearby{display:flex;gap:14px;overflow-x:auto;padding:4px 20px 12px;scroll-snap-type:x mandatory;scroll-behavior:smooth;scroll-padding-left:20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.nearby::-webkit-scrollbar{display:none}
+.near{flex:0 0 auto;width:220px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--line);scroll-snap-align:start}
+.near__img{width:100%;height:130px;object-fit:cover}
+.near__body{padding:12px 14px 16px}
+.near__title{font-size:14px;font-weight:700;margin:0 0 4px}
+.near__desc{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+
+/* =========================================================
+   FAQ
+========================================================= */
+.faq{border:1px solid var(--line);border-radius:16px;background:#fff;margin-bottom:10px;overflow:hidden;transition:box-shadow .2s}
+.faq.on{box-shadow:var(--shadow)}
+.faq__q{
+  width:100%;text-align:left;padding:16px 18px;font-weight:600;font-size:14px;
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+}
+.faq__q svg{width:20px;height:20px;color:var(--primary);transition:transform .3s;flex:0 0 auto}
+.faq.on .faq__q svg{transform:rotate(45deg)}
+.faq__a{max-height:0;overflow:hidden;transition:max-height .35s ease;padding:0 18px;color:var(--muted);font-size:13.5px}
+.faq.on .faq__a{max-height:220px;padding-bottom:16px}
+
+/* =========================================================
+   SHARE
+========================================================= */
+.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.share-btn{
+  display:flex;align-items:center;gap:10px;padding:14px 16px;border-radius:16px;
+  background:#fff;border:1px solid var(--line);font-weight:600;font-size:13.5px;
+  transition:background .2s,transform .15s;
+}
+.share-btn:active{transform:scale(.97)}
+.share-btn:hover{background:var(--bg-soft)}
+.share-btn svg{width:20px;height:20px;color:var(--primary)}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+footer{padding:40px 20px 40px;text-align:center;color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);margin-top:20px}
+footer strong{color:var(--primary-2)}
+
+/* =========================================================
+   REVEAL ANIM
+========================================================= */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* =========================================================
+   AUDIO NARRATION SENTENCE HIGHLIGHT
+========================================================= */
+.spk{
+  background:linear-gradient(90deg,#FEF3C7,#FDE68A);
+  border-left:3px solid var(--primary);
+  padding:2px 8px;margin-left:-8px;border-radius:6px;
+  transition:background .3s;
+  box-decoration-break:clone;-webkit-box-decoration-break:clone;
+}
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+.lightbox{
+  position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;
+  display:none;align-items:center;justify-content:center;
+  animation:fadeIn .25s ease;
+}
+.lightbox.on{display:flex}
+.lightbox img{max-width:94vw;max-height:82vh;border-radius:14px}
+.lightbox__close{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center}
+.lightbox__close svg{width:22px;height:22px}
+.lightbox__nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;display:grid;place-items:center}
+.lightbox__nav.prev{left:14px}.lightbox__nav.next{right:14px}
+.lightbox__cap{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:#fff;font-size:13px;opacity:.9;padding:0 20px}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+@media (max-width:360px){
+  .facts{grid-template-columns:repeat(2,1fr)}
+  .tabs{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<div class="wrap">
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+<header class="header" id="header">
+  <div class="brand">
+    <div class="brand__logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M8 6h8M6 22h12M8 22V10a4 4 0 0 1 8 0v12"/></svg>
+    </div>
+    <div class="brand__text">
+      <small data-i18n="brand.tag">Explore</small>
+      <strong data-i18n="brand.name">Kanyakumari</strong>
+    </div>
+  </div>
+  <label class="lang" aria-label="Language">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+    <span id="langLabel">English</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    <select id="langSel" aria-label="Change language">
+      <option value="en">English</option>
+      <option value="ta">தமிழ்</option>
+      <option value="hi">हिन्दी</option>
+    </select>
+  </label>
+</header>
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+<section class="hero" style="padding:0">
+  <img src="assets/hero.jpg" alt="Thiruvalluvar Statue at sunset" class="hero__img" />
+  <div class="hero__overlay"></div>
+  <div class="hero__content">
+    <div class="badges">
+      <span class="badge badge--mon" data-i18n="hero.badge1">MONUMENT</span>
+      <span class="badge badge--wis" data-i18n="hero.badge2">TIMELESS WISDOM</span>
+    </div>
+    <h1 class="hero__title" data-i18n="hero.title">Thiruvalluvar<br/>Statue</h1>
+    <p class="hero__sub" data-i18n="hero.sub">A timeless tribute to the wisdom of Thiruvalluvar and the eternal values of the Thirukkural.</p>
+    <div style="display:flex;justify-content:flex-end;margin-top:14px">
+      <span class="chip chip--loc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-7 7-13a7 7 0 1 0-14 0c0 6 7 13 7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span data-i18n="hero.location">Kanyakumari, Tamil Nadu</span>
+      </span>
+    </div>
+  </div>
+  <button class="scroll-hint" aria-label="Scroll for more" onclick="document.getElementById('quickFacts').scrollIntoView({behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</section>
+
+<!-- =========================================================
+     AUDIO GUIDE
+========================================================= -->
+<div class="audio" id="audioBar" role="region" aria-label="Audio guide player">
+  <div class="audio__ico" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14v-3a8 8 0 0 1 16 0v3"/><path d="M4 14a2 2 0 0 1 2-2h2v6H6a2 2 0 0 1-2-2v-2z"/><path d="M20 14a2 2 0 0 0-2-2h-2v6h2a2 2 0 0 0 2-2v-2z"/></svg>
+  </div>
+  <div class="audio__main">
+    <div class="audio__title"><span data-i18n="audio.title">Audio Guide</span> <span data-i18n="audio.langLabel">(English)</span></div>
+    <div class="wave" id="wave" aria-hidden="true"></div>
+    <div class="audio__bar" id="audioProgress"><div class="audio__fill" id="audioFill"></div></div>
+    <div class="audio__times"><span id="curTime">00:00</span><span id="totTime">--:--</span></div>
+  </div>
+  <div class="audio__ctrls">
+    <button class="speed" id="speedBtn" aria-label="Playback speed">1.0x</button>
+    <button class="iconbtn" id="prevBtn" aria-label="Previous section">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM10 12l10-6v12z"/></svg>
+    </button>
+    <button class="playbtn" id="playBtn" aria-label="Play">
+      <svg viewBox="0 0 24 24" fill="currentColor" id="playIcon"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="iconbtn" id="nextBtn" aria-label="Next section">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM4 6l10 6-10 6z"/></svg>
+    </button>
+    <button class="iconbtn" id="volBtn" aria-label="Volume">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10v4h4l5 4V6L8 10H4z"/><path d="M16 8a5 5 0 0 1 0 8"/></svg>
+    </button>
+  </div>
+</div>
+<div class="audio__note" id="audioNote" data-i18n="audio.unsupported">Audio narration is not supported on this device.</div>
+
+<!-- =========================================================
+     QUICK FACTS
+========================================================= -->
+<section id="quickFacts">
+  <div class="section-head">
+    <h2 class="section-title" data-i18n="qf.title">Quick Facts</h2>
+  </div>
+  <div class="qf" id="qfScroll">
+    <article class="qf__card">
+      <span class="qf__ico" style="background:var(--grad-accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 17V9M11 17V6M15 17v-6M19 17v-9"/></svg></span>
+      <small class="qf__label" data-i18n="qf.height">Total Height</small>
+      <strong class="qf__value">133</strong><small class="qf__unit" data-i18n="qf.feet">Feet</small>
+    </article>
+    <article class="qf__card">
+      <span class="qf__ico" style="background:var(--grad-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c2 3 2 6 0 8-2-2-2-5 0-8zM8 22h8M10 22v-8h4v8"/></svg></span>
+      <small class="qf__label" data-i18n="qf.statue">Statue Height</small>
+      <strong class="qf__value">95</strong><small class="qf__unit" data-i18n="qf.feet">Feet</small>
+    </article>
+    <article class="qf__card">
+      <span class="qf__ico" style="background:linear-gradient(135deg,#8B5CF6,#3B82F6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22h16M6 22V10l6-4 6 4v12"/></svg></span>
+      <small class="qf__label" data-i18n="qf.pedestal">Pedestal Height</small>
+      <strong class="qf__value">38</strong><small class="qf__unit" data-i18n="qf.feet">Feet</small>
+    </article>
+    <article class="qf__card">
+      <span class="qf__ico" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 22V10l8-6 8 6v12"/><path d="M9 22v-6h6v6"/></svg></span>
+      <small class="qf__label" data-i18n="qf.built">Built By</small>
+      <strong class="qf__value" style="font-size:15px;line-height:1.25" data-i18n="qf.govt">Govt. of Tamil Nadu</strong>
+    </article>
+    <article class="qf__card">
+      <span class="qf__ico" style="background:linear-gradient(135deg,#F43F5E,#F59E0B)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></span>
+      <small class="qf__label" data-i18n="qf.inaug">Inaugurated</small>
+      <strong class="qf__value" style="font-size:16px">1 Jan<br/>2000</strong>
+    </article>
+  </div>
+</section>
+
+<!-- =========================================================
+     STORY / OVERVIEW
+========================================================= -->
+<section class="reveal">
+  <div class="card">
+    <div class="story">
+      <div class="story__text">
+        <h2 class="section-title" style="font-size:22px;margin-bottom:10px" data-i18n="story.title">The Story</h2>
+        <p class="dropcap" data-narrate data-i18n="story.p1">Thiruvalluvar, the poet-sage of Tamil literature, authored the Thirukkural, a universal scripture on virtue, wealth and love. The 133-feet statue stands as a tribute to his timeless wisdom that transcends all boundaries.</p>
+      </div>
+      <img src="assets/story.jpg" alt="" loading="lazy" class="story__img"/>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TABS
+========================================================= -->
+<section class="reveal" style="padding-top:0">
+  <nav class="tabs" aria-label="Sections">
+    <button class="tab c1"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 4l10 6v18H6V10z"/><path d="M12 28v-8h8v8"/></svg><span data-i18n="tabs.history">History</span></button>
+    <button class="tab c2"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 28V10M24 28V10M6 10h20M10 6h12"/></svg><span data-i18n="tabs.arch">Architecture</span></button>
+    <button class="tab c3"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 6c-4 4-4 10 0 14 4-4 4-10 0-14zM10 16c4 0 6 4 6 8-4 0-6-4-6-8zM22 16c-4 0-6 4-6 8 4 0 6-4 6-8z"/></svg><span data-i18n="tabs.sym">Symbolism</span></button>
+    <button class="tab c4"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 18c4-4 6 4 10 0s6 4 10 0"/><path d="M4 22c4-4 6 4 10 0s6 4 10 0"/><path d="M4 14c4-4 6 4 10 0s6 4 10 0"/></svg><span data-i18n="tabs.exp">Experience</span></button>
+    <button class="tab c5"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="7" width="22" height="18" rx="2"/><circle cx="12" cy="14" r="2"/><path d="M5 22l7-6 6 5 4-3 5 4"/></svg><span data-i18n="tabs.gal">Gallery</span></button>
+    <button class="tab c6"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M16 4v3M16 25v3M4 16h3M25 16h3M8 8l2 2M22 22l2 2M8 24l2-2M22 10l2-2"/><circle cx="16" cy="16" r="6"/></svg><span data-i18n="tabs.facts">Facts</span></button>
+  </nav>
+</section>
+
+<!-- =========================================================
+     INTERESTING FACTS
+========================================================= -->
+<section class="reveal" id="facts">
+  <div class="section-head">
+    <h2 class="section-title" data-i18n="facts.title">Interesting Facts</h2>
+    <span class="chip" style="background:var(--bg-soft);color:var(--text);font-weight:700">6</span>
+  </div>
+  <div class="facts">
+    <div class="fact"><span class="fact__ico" style="color:#14B8A6"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 22c4-3 8 3 12 0s8 3 12 0"/><path d="M8 14l4 4M20 14l-4 4M16 6v12"/></svg></span><p data-narrate data-i18n="facts.f1">The statue stands on a rock island about 500 meters from the shore.</p></div>
+    <div class="fact"><span class="fact__ico" style="color:#3B82F6"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 16s4-8 12-8 12 8 12 8-4 8-12 8S4 16 4 16z"/><circle cx="16" cy="16" r="4"/></svg></span><p data-narrate data-i18n="facts.f2">It is visible from almost every part of the Kanyakumari coast.</p></div>
+    <div class="fact"><span class="fact__ico" style="color:#F97316"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 26L14 10l6 8 4-5 4 13z"/></svg></span><p data-narrate data-i18n="facts.f3">More than 3000 tons of granite stones were used.</p></div>
+    <div class="fact"><span class="fact__ico" style="color:#0EA5E9"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 12h16a3 3 0 1 0-3-3M4 18h20a3 3 0 1 1-3 3M4 24h12"/></svg></span><p data-narrate data-i18n="facts.f4">Engineered to withstand strong sea winds and waves year-round.</p></div>
+    <div class="fact"><span class="fact__ico" style="color:#8B5CF6"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="16" cy="16" r="12"/><path d="M4 16h24M16 4a16 16 0 0 1 0 24M16 4a16 16 0 0 0 0 24"/></svg></span><p data-narrate data-i18n="facts.f5">One of the tallest literary statues in the world.</p></div>
+    <div class="fact"><span class="fact__ico" style="color:#F59E0B"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 4h8v24h-8z"/><path d="M8 28h16M16 4v-2"/><circle cx="16" cy="2" r="1"/></svg></span><p data-narrate data-i18n="facts.f6">Built using advanced marine engineering techniques.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     HISTORICAL BACKGROUND
+========================================================= -->
+<section class="reveal">
+  <div class="card">
+    <div style="font-size:11px;color:var(--primary);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px" data-i18n="hist.kicker">Historical Background</div>
+    <h2 class="section-title" style="margin-bottom:12px" data-i18n="hist.title">A Sage Cast in Stone</h2>
+    <p data-narrate data-i18n="hist.p1" style="color:var(--muted);font-size:14.5px">Thiruvalluvar is revered as one of the greatest philosophers of Tamil literature. His work, the Thirukkural, is a couplet-based scripture that speaks with equal grace on righteousness, prosperity and love — a moral compass embraced far beyond the borders of Tamil Nadu.</p>
+    <p data-narrate data-i18n="hist.p2" style="color:var(--muted);font-size:14.5px">The Tamil Nadu government commissioned this monumental statue as a public tribute to that legacy. Rising above the meeting point of the seas, it was conceived as a symbol of enduring wisdom for every visitor who arrives at India's southern tip.</p>
+    <p data-narrate data-i18n="hist.p3" style="color:var(--muted);font-size:14.5px">Years of planning, careful stonework and marine engineering brought the vision to life. Its inauguration in the year 2000 turned an isolated rock islet into one of the most recognised cultural landmarks of the country.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     TIMELINE
+========================================================= -->
+<section class="reveal">
+  <div class="section-head"><h2 class="section-title" data-i18n="tl.title">Historical Timeline</h2></div>
+  <div class="timeline">
+    <div class="tl"><div class="tl__year" data-i18n="tl.e1y">Sangam Era</div><div class="tl__title" data-i18n="tl.e1t">Age of Thiruvalluvar</div><p class="tl__desc" data-i18n="tl.e1d">The poet-sage lives and composes verses that will shape Tamil thought for centuries.</p></div>
+    <div class="tl"><div class="tl__year" data-i18n="tl.e2y">Antiquity</div><div class="tl__title" data-i18n="tl.e2t">Thirukkural Composed</div><p class="tl__desc" data-i18n="tl.e2d">1,330 couplets across 133 chapters distill virtue, wealth and love into timeless wisdom.</p></div>
+    <div class="tl"><div class="tl__year" data-i18n="tl.e3y">1975</div><div class="tl__title" data-i18n="tl.e3t">Idea of the Monument</div><p class="tl__desc" data-i18n="tl.e3d">A vision emerges to honour the sage with a statue at land's end in Kanyakumari.</p></div>
+    <div class="tl"><div class="tl__year" data-i18n="tl.e4y">1990</div><div class="tl__title" data-i18n="tl.e4t">Planning &amp; Design</div><p class="tl__desc" data-i18n="tl.e4d">Sculptor V. Ganapathi Sthapati leads the design guided by classical Shilpa Shastra.</p></div>
+    <div class="tl"><div class="tl__year" data-i18n="tl.e5y">1990s</div><div class="tl__title" data-i18n="tl.e5t">Construction Journey</div><p class="tl__desc" data-i18n="tl.e5d">Blocks of granite are shaped on shore and shipped to the rock islet for assembly.</p></div>
+    <div class="tl"><div class="tl__year" data-i18n="tl.e6y">2000</div><div class="tl__title" data-i18n="tl.e6t">Inauguration</div><p class="tl__desc" data-i18n="tl.e6d">On 1 January 2000, the statue is unveiled to mark the new millennium.</p></div>
+    <div class="tl"><div class="tl__year" data-i18n="tl.e7y">Today</div><div class="tl__title" data-i18n="tl.e7t">A Cultural Landmark</div><p class="tl__desc" data-i18n="tl.e7d">A symbol of Tamil identity welcoming travellers from around the world.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     ARCHITECTURE
+========================================================= -->
+<section class="reveal">
+  <div class="card">
+    <div style="font-size:11px;color:var(--secondary);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px" data-i18n="arch.kicker">Architecture</div>
+    <h2 class="section-title" style="margin-bottom:12px" data-i18n="arch.title">Granite Reaching for the Sky</h2>
+    <p data-narrate data-i18n="arch.p1" style="color:var(--muted);font-size:14.5px">The statue rises 133 feet from base to crown — a 95-foot sculpted figure resting on a 38-foot pedestal shaped like a temple sanctum. Every block is carved from hard granite, chosen for its ability to endure the salty coastal air for generations.</p>
+    <p data-narrate data-i18n="arch.p2" style="color:var(--muted);font-size:14.5px">Craftsmen followed principles of classical Shilpa Shastra, shaping robes, ornaments and facial features by hand. The pedestal echoes the mandapa halls of Tamil temples, so the monument feels rooted in the region's architectural memory.</p>
+    <p data-narrate data-i18n="arch.p3" style="color:var(--muted);font-size:14.5px">Because the site sits on an exposed rock islet, the structure was engineered to withstand strong coastal winds and lashing waves. Marine engineering, careful anchoring and thoughtful load distribution allow it to stand poised above the sea.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     SYMBOLISM
+========================================================= -->
+<section class="reveal">
+  <div class="card">
+    <div style="font-size:11px;color:var(--accent);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px" data-i18n="sym.kicker">Symbolism</div>
+    <h2 class="section-title" style="margin-bottom:12px" data-i18n="sym.title">Every Detail Tells a Story</h2>
+    <p data-narrate data-i18n="sym.p1" style="color:var(--muted);font-size:14.5px">The 133-foot height is no accident — it mirrors the 133 chapters of the Thirukkural. Standing before the statue is like standing before the work itself: one foot for every chapter, one chapter for every lesson.</p>
+    <p data-narrate data-i18n="sym.p2" style="color:var(--muted);font-size:14.5px">Three raised fingers of the right hand represent the three great themes of the scripture — Aram (virtue), Porul (wealth) and Inbam (love). Together, they form the Tamil philosophy of a complete and balanced life.</p>
+    <p data-narrate data-i18n="sym.p3" style="color:var(--muted);font-size:14.5px">Facing the meeting point of the seas, the sage seems to bless all who arrive here. For the Tamil people, this is more than a monument — it is a public declaration that literature and ethics are worth building for.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     IMMERSIVE EXPERIENCE
+========================================================= -->
+<section class="reveal">
+  <div class="card" style="background:linear-gradient(160deg,#F0F9FF, #ECFEFF);border:1px solid rgba(14,165,233,.15)">
+    <div style="font-size:11px;color:var(--primary);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px" data-i18n="imm.kicker">Immersive Experience</div>
+    <h2 class="section-title" style="margin-bottom:12px" data-i18n="imm.title">Standing at Land's End</h2>
+    <p data-narrate data-i18n="imm.p1" style="color:var(--text);font-size:14.5px">Step off the ferry and you feel it instantly — the wind salted with the sea, the sky opening wide, and the calm weight of stone rising above you. The islet is small, but the moment feels vast.</p>
+    <p data-narrate data-i18n="imm.p2" style="color:var(--text);font-size:14.5px">At sunrise, warm light spills across the sage's shoulders and the ocean turns gold. At sunset, the entire coast glows behind the statue — a scene that stays with travellers long after they head home.</p>
+    <p data-narrate data-i18n="imm.p3" style="color:var(--text);font-size:14.5px">Photographers come for the silhouette. Pilgrims come for the quiet. Families come for the boat ride. Everyone leaves with the same soft impression: a sense of scale, of place, of purpose.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     GALLERY
+========================================================= -->
+<section class="reveal">
+  <div class="section-head"><h2 class="section-title" data-i18n="gal.title">Gallery</h2></div>
+  <div class="gallery" id="gallery">
+    <div class="gallery__col">
+      <div class="g tall" data-cap="Sunset over the statue" data-order="0"><img src="assets/gallery-1.jpg" alt="Thiruvalluvar Statue at sunset" loading="lazy"/></div>
+      <div class="g" data-cap="Detail of the sculpture" data-order="2"><img src="assets/gallery-3.jpg" alt="Sculpture detail" loading="lazy"/></div>
+    </div>
+    <div class="gallery__col">
+      <div class="g" data-cap="Rock island setting" data-order="1"><img src="assets/gallery-2.jpg" alt="Statue on rock island" loading="lazy"/></div>
+      <div class="g tall" data-cap="Ocean surroundings" data-order="3"><img src="assets/gallery-4.jpg" alt="Ocean around statue" loading="lazy"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     VISITOR TIPS
+========================================================= -->
+<section class="reveal">
+  <div class="section-head"><h2 class="section-title" data-i18n="tips.title">Visitor Tips</h2></div>
+  <div class="tips">
+    <div class="tip"><div class="tip__ico" style="background:var(--grad-primary)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5h8v2"/><circle cx="12" cy="13" r="3.5"/></svg></div><h4 data-i18n="tips.t1t">Best Photography</h4><p data-i18n="tips.t1d">Sunrise and golden hour deliver the most cinematic light.</p></div>
+    <div class="tip"><div class="tip__ico" style="background:var(--grad-accent)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h4 data-i18n="tips.t2t">Time to Spend</h4><p data-i18n="tips.t2d">Plan 60–90 minutes to enjoy the site without rushing.</p></div>
+    <div class="tip"><div class="tip__ico" style="background:linear-gradient(135deg,#8B5CF6,#EC4899)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div><h4 data-i18n="tips.t3t">Things to Observe</h4><p data-i18n="tips.t3d">Look for the three raised fingers and the pedestal carvings.</p></div>
+    <div class="tip"><div class="tip__ico" style="background:linear-gradient(135deg,#EF4444,#F59E0B)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l9 4v6c0 5-4 9-9 10-5-1-9-5-9-10V6z"/></svg></div><h4 data-i18n="tips.t4t">Stay Safe</h4><p data-i18n="tips.t4d">Wear grippy footwear — the rocks stay damp near the sea.</p></div>
+    <div class="tip"><div class="tip__ico" style="background:linear-gradient(135deg,#14B8A6,#0EA5E9)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M4 8h16M4 16h16"/></svg></div><h4 data-i18n="tips.t5t">Respect Culture</h4><p data-i18n="tips.t5d">Speak softly — many visitors treat this as a place of reflection.</p></div>
+    <div class="tip"><div class="tip__ico" style="background:linear-gradient(135deg,#22C55E,#14B8A6)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-4 7-11a7 7 0 0 0-14 0c0 7 7 11 7 11z"/></svg></div><h4 data-i18n="tips.t6t">Keep it Clean</h4><p data-i18n="tips.t6d">Carry back everything you bring — protect this fragile coast.</p></div>
+  </div>
+</section>
+
+<!-- =========================================================
+     NEARBY
+========================================================= -->
+<section class="reveal" style="padding-left:0;padding-right:0">
+  <div class="section-head" style="padding:0 20px"><h2 class="section-title" data-i18n="near.title">Nearby Attractions</h2></div>
+  <div class="nearby">
+    <article class="near"><img src="assets/nearby-1.jpg" alt="" class="near__img" loading="lazy"/><div class="near__body"><h3 class="near__title" data-i18n="near.n1t">Vivekananda Rock Memorial</h3><p class="near__desc" data-i18n="near.n1d">A serene meditation hall on the adjacent rock islet.</p></div></article>
+    <article class="near"><img src="assets/nearby-2.jpg" alt="" class="near__img" loading="lazy"/><div class="near__body"><h3 class="near__title" data-i18n="near.n2t">Kanyakumari Beach</h3><p class="near__desc" data-i18n="near.n2d">Multicoloured sands where three seas softly meet.</p></div></article>
+    <article class="near"><img src="assets/nearby-3.jpg" alt="" class="near__img" loading="lazy"/><div class="near__body"><h3 class="near__title" data-i18n="near.n3t">Bhagavathy Amman Temple</h3><p class="near__desc" data-i18n="near.n3d">A centuries-old shrine at the very tip of the peninsula.</p></div></article>
+    <article class="near"><img src="assets/nearby-4.jpg" alt="" class="near__img" loading="lazy"/><div class="near__body"><h3 class="near__title" data-i18n="near.n4t">Sunrise View Point</h3><p class="near__desc" data-i18n="near.n4d">A cliffside deck famed for its unforgettable dawns.</p></div></article>
+    <article class="near"><img src="assets/nearby-5.jpg" alt="" class="near__img" loading="lazy"/><div class="near__body"><h3 class="near__title" data-i18n="near.n5t">Gandhi Memorial</h3><p class="near__desc" data-i18n="near.n5d">An elegant monument built where Gandhi's ashes rested.</p></div></article>
+  </div>
+</section>
+
+<!-- =========================================================
+     CULTURE
+========================================================= -->
+<section class="reveal">
+  <div class="card">
+    <div style="font-size:11px;color:var(--secondary);font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px" data-i18n="cul.kicker">Culture &amp; Heritage</div>
+    <h2 class="section-title" style="margin-bottom:12px" data-i18n="cul.title">A Living Tamil Legacy</h2>
+    <p data-narrate data-i18n="cul.p1" style="color:var(--muted);font-size:14.5px">Tamil culture is one of the world's oldest living traditions — a heritage of literature, temple arts, music and philosophy stretching across millennia. Thiruvalluvar's verses sit right at its heart.</p>
+    <p data-narrate data-i18n="cul.p2" style="color:var(--muted);font-size:14.5px">Around Kanyakumari, festivals, coastal cuisine and family rituals still carry echoes of that older world. The statue quietly gathers all of it into one silhouette above the sea.</p>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+<footer>
+  <div style="font-size:16px;font-weight:800;color:var(--primary-2);margin-bottom:6px" data-i18n="foot.title">Explore Kanyakumari</div>
+  <p data-i18n="foot.tag">A premium digital tourism guide.</p>
+  <p style="margin-top:10px;font-size:11px;opacity:.75">© 2026 · <strong data-i18n="foot.by">Explore Kanyakumari</strong></p>
+</footer>
+
+</div>
+
+<!-- =========================================================
+     LIGHTBOX
+========================================================= -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Image viewer">
+  <button class="lightbox__close" id="lbClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lightbox__nav prev" id="lbPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <img id="lbImg" alt=""/>
+  <button class="lightbox__nav next" id="lbNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+  <div class="lightbox__cap" id="lbCap"></div>
+</div>
+
+<script>
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
+const T = {
+  en:{
+    brand:{tag:"Explore",name:"Kanyakumari"},
+    hero:{location:"Kanyakumari, Tamil Nadu",badge1:"MONUMENT",badge2:"TIMELESS WISDOM",title:"Thiruvalluvar<br/>Statue",sub:"A timeless tribute to the wisdom of Thiruvalluvar and the eternal values of the Thirukkural.",read:"Reading Time",bookmark:"Bookmark",share:"Share"},
+    audio:{title:"Audio Guide",langLabel:"(English)",unsupported:"Audio narration is not supported on this device."},
+    qf:{title:"Quick Facts",all:"View All ›",height:"Total Height",statue:"Statue Height",pedestal:"Pedestal Height",built:"Built By",inaug:"Inaugurated",feet:"Feet",govt:"Govt. of Tamil Nadu"},
+    story:{title:"The Story",p1:"Thiruvalluvar, the poet-sage of Tamil literature, authored the Thirukkural, a universal scripture on virtue, wealth and love. The 133-feet statue stands as a tribute to his timeless wisdom that transcends all boundaries."},
+    tabs:{history:"History",arch:"Architecture",sym:"Symbolism",exp:"Experience",gal:"Gallery",facts:"Facts"},
+    facts:{title:"Interesting Facts",f1:"The statue stands on a rock island about 500 meters from the shore.",f2:"It is visible from almost every part of the Kanyakumari coast.",f3:"More than 3000 tons of granite stones were used.",f4:"Engineered to withstand strong sea winds and waves year-round.",f5:"One of the tallest literary statues in the world.",f6:"Built using advanced marine engineering techniques."},
+    dyk:{title:"Did You Know?",flip:"↻ Tap to flip",h1:"Tap to reveal",q1:"133 = 133 chapters",a1:"The statue's 133-foot height honors the 133 chapters of the Thirukkural.",q2:"Sculptor's Vision",a2:"Designed by acclaimed sculptor V. Ganapathi Sthapati.",q3:"Millennium Gift",a3:"Unveiled on 1 January 2000 to welcome the new millennium.",q4:"Three Oceans",a4:"The statue watches over the meeting of three great water bodies."},
+    hist:{kicker:"Historical Background",title:"A Sage Cast in Stone",p1:"Thiruvalluvar is revered as one of the greatest philosophers of Tamil literature. His work, the Thirukkural, is a couplet-based scripture that speaks with equal grace on righteousness, prosperity and love — a moral compass embraced far beyond the borders of Tamil Nadu.",p2:"The Tamil Nadu government commissioned this monumental statue as a public tribute to that legacy. Rising above the meeting point of the seas, it was conceived as a symbol of enduring wisdom for every visitor who arrives at India's southern tip.",p3:"Years of planning, careful stonework and marine engineering brought the vision to life. Its inauguration in the year 2000 turned an isolated rock islet into one of the most recognised cultural landmarks of the country."},
+    tl:{title:"Historical Timeline",e1y:"Sangam Era",e1t:"Age of Thiruvalluvar",e1d:"The poet-sage lives and composes verses that will shape Tamil thought for centuries.",e2y:"Antiquity",e2t:"Thirukkural Composed",e2d:"1,330 couplets across 133 chapters distill virtue, wealth and love into timeless wisdom.",e3y:"1975",e3t:"Idea of the Monument",e3d:"A vision emerges to honour the sage with a statue at land's end in Kanyakumari.",e4y:"1990",e4t:"Planning & Design",e4d:"Sculptor V. Ganapathi Sthapati leads the design guided by classical Shilpa Shastra.",e5y:"1990s",e5t:"Construction Journey",e5d:"Blocks of granite are shaped on shore and shipped to the rock islet for assembly.",e6y:"2000",e6t:"Inauguration",e6d:"On 1 January 2000, the statue is unveiled to mark the new millennium.",e7y:"Today",e7t:"A Cultural Landmark",e7d:"A symbol of Tamil identity welcoming travellers from around the world."},
+    arch:{kicker:"Architecture",title:"Granite Reaching for the Sky",p1:"The statue rises 133 feet from base to crown — a 95-foot sculpted figure resting on a 38-foot pedestal shaped like a temple sanctum. Every block is carved from hard granite, chosen for its ability to endure the salty coastal air for generations.",p2:"Craftsmen followed principles of classical Shilpa Shastra, shaping robes, ornaments and facial features by hand. The pedestal echoes the mandapa halls of Tamil temples, so the monument feels rooted in the region's architectural memory.",p3:"Because the site sits on an exposed rock islet, the structure was engineered to withstand strong coastal winds and lashing waves. Marine engineering, careful anchoring and thoughtful load distribution allow it to stand poised above the sea."},
+    sym:{kicker:"Symbolism",title:"Every Detail Tells a Story",p1:"The 133-foot height is no accident — it mirrors the 133 chapters of the Thirukkural. Standing before the statue is like standing before the work itself: one foot for every chapter, one chapter for every lesson.",p2:"Three raised fingers of the right hand represent the three great themes of the scripture — Aram (virtue), Porul (wealth) and Inbam (love). Together, they form the Tamil philosophy of a complete and balanced life.",p3:"Facing the meeting point of the seas, the sage seems to bless all who arrive here. For the Tamil people, this is more than a monument — it is a public declaration that literature and ethics are worth building for."},
+    imm:{kicker:"Immersive Experience",title:"Standing at Land's End",p1:"Step off the ferry and you feel it instantly — the wind salted with the sea, the sky opening wide, and the calm weight of stone rising above you. The islet is small, but the moment feels vast.",p2:"At sunrise, warm light spills across the sage's shoulders and the ocean turns gold. At sunset, the entire coast glows behind the statue — a scene that stays with travellers long after they head home.",p3:"Photographers come for the silhouette. Pilgrims come for the quiet. Families come for the boat ride. Everyone leaves with the same soft impression: a sense of scale, of place, of purpose."},
+    gal:{title:"Gallery",view:"View All ›"},
+    tips:{title:"Visitor Tips",t1t:"Best Photography",t1d:"Sunrise and golden hour deliver the most cinematic light.",t2t:"Time to Spend",t2d:"Plan 60–90 minutes to enjoy the site without rushing.",t3t:"Things to Observe",t3d:"Look for the three raised fingers and the pedestal carvings.",t4t:"Stay Safe",t4d:"Wear grippy footwear — the rocks stay damp near the sea.",t5t:"Respect Culture",t5d:"Speak softly — many visitors treat this as a place of reflection.",t6t:"Keep it Clean",t6d:"Carry back everything you bring — protect this fragile coast."},
+    near:{title:"Nearby Attractions",n1t:"Vivekananda Rock Memorial",n1d:"A serene meditation hall on the adjacent rock islet.",n2t:"Kanyakumari Beach",n2d:"Multicoloured sands where three seas softly meet.",n3t:"Bhagavathy Amman Temple",n3d:"A centuries-old shrine at the very tip of the peninsula.",n4t:"Sunrise View Point",n4d:"A cliffside deck famed for its unforgettable dawns.",n5t:"Gandhi Memorial",n5d:"An elegant monument built where Gandhi's ashes rested."},
+    cul:{kicker:"Culture & Heritage",title:"A Living Tamil Legacy",p1:"Tamil culture is one of the world's oldest living traditions — a heritage of literature, temple arts, music and philosophy stretching across millennia. Thiruvalluvar's verses sit right at its heart.",p2:"Around Kanyakumari, festivals, coastal cuisine and family rituals still carry echoes of that older world. The statue quietly gathers all of it into one silhouette above the sea."},
+    faq:{title:"Frequently Asked",items:[
+      ["Where is the Thiruvalluvar Statue located?","It stands on a small rock islet off the coast of Kanyakumari, at the southernmost tip of the Indian mainland."],
+      ["How tall is the statue?","The total height is 133 feet — a 95-foot sculpted figure resting on a 38-foot pedestal."],
+      ["Why 133 feet specifically?","The height honours the 133 chapters of the Thirukkural, Thiruvalluvar's timeless work."],
+      ["Who designed the statue?","It was designed by the acclaimed sculptor V. Ganapathi Sthapati following classical Shilpa Shastra."],
+      ["When was it inaugurated?","The statue was unveiled on 1 January 2000 to welcome the new millennium."],
+      ["What material is used?","Massive blocks of hard granite were used for durability against the coastal environment."],
+      ["Can visitors go up to the statue?","Yes — ferries connect the mainland to the rock islet for close-up visits."],
+      ["What is the best time to visit?","Early mornings and evenings offer cooler weather and the most beautiful light."]
+    ]},
+    share:{title:"Share this Guide",copy:"Copy Link",share:"Share",save:"Save Guide",bm:"Bookmark"},
+    foot:{title:"Explore Kanyakumari",tag:"A premium digital tourism guide.",by:"Explore Kanyakumari"},
+    nav:{home:"Home",tips:"Tips",nearby:"Nearby",faq:"FAQ"}
+  },
+  ta:{
+    brand:{tag:"பார்வையிடு",name:"கன்னியாகுமரி"},
+    hero:{location:"கன்னியாகுமரி, தமிழ்நாடு",badge1:"நினைவுச்சின்னம்",badge2:"காலமற்ற ஞானம்",title:"திருவள்ளுவர்<br/>சிலை",sub:"திருவள்ளுவரின் ஞானத்திற்கும், திருக்குறளின் நிலையான விழுமியங்களுக்கும் ஒரு நித்திய அஞ்சலி.",read:"படிக்கும் நேரம்",bookmark:"சேமி",share:"பகிர்"},
+    audio:{title:"ஒலி வழிகாட்டி",langLabel:"(ஆங்கிலம்)",unsupported:"இந்த சாதனத்தில் ஒலி விவரிப்பு ஆதரிக்கப்படவில்லை."},
+    qf:{title:"விரைவு தகவல்கள்",all:"அனைத்தும் ›",height:"மொத்த உயரம்",statue:"சிலை உயரம்",pedestal:"பீடம் உயரம்",built:"கட்டியவர்",inaug:"திறப்பு",feet:"அடி",govt:"தமிழ்நாடு அரசு"},
+    story:{title:"கதை",p1:"தமிழ் இலக்கியத்தின் புலவரும் ஞானியுமான திருவள்ளுவர், அறம், பொருள், இன்பம் ஆகியவற்றை போதிக்கும் திருக்குறளை இயற்றினார். 133 அடி உயரமுள்ள இச்சிலை அவரது காலமற்ற ஞானத்திற்கு அஞ்சலி."},
+    tabs:{history:"வரலாறு",arch:"கட்டடக்கலை",sym:"குறியீடு",exp:"அனுபவம்",gal:"படத்தொகுப்பு",facts:"தகவல்கள்"},
+    facts:{title:"சுவாரஸ்யமான தகவல்கள்",f1:"கரையிலிருந்து சுமார் 500 மீ தொலைவில் உள்ள பாறையில் சிலை நிற்கிறது.",f2:"கன்னியாகுமரி கடற்கரையின் எல்லா இடங்களிலிருந்தும் தெரிகிறது.",f3:"3000 டன்களுக்கும் மேற்பட்ட கிரானைட் கற்கள் பயன்படுத்தப்பட்டுள்ளன.",f4:"கடல் காற்றையும் அலைகளையும் தாங்கும் வகையில் வடிவமைக்கப்பட்டுள்ளது.",f5:"உலகின் மிக உயரமான இலக்கிய சிலைகளில் ஒன்று.",f6:"நவீன கடல் பொறியியல் நுட்பங்களால் கட்டப்பட்டது."},
+    dyk:{title:"தெரியுமா?",flip:"↻ புரட்ட தட்டு",h1:"திற",q1:"133 = 133 அதிகாரங்கள்",a1:"சிலையின் 133 அடி உயரம் திருக்குறளின் 133 அதிகாரங்களை குறிக்கிறது.",q2:"சிற்பியின் கனவு",a2:"சிற்பி வெ. கணபதி ஸ்தபதி வடிவமைத்தார்.",q3:"ஆயிரமாண்டு பரிசு",a3:"2000 ஜனவரி 1 அன்று திறக்கப்பட்டது.",q4:"மூன்று கடல்கள்",a4:"மூன்று கடல்கள் சங்கமிக்கும் இடத்தை காக்கிறது."},
+    hist:{kicker:"வரலாற்று பின்னணி",title:"கல்லில் வடிக்கப்பட்ட ஞானி",p1:"தமிழ் இலக்கியத்தின் மகத்தான தத்துவஞானிகளில் ஒருவராக திருவள்ளுவர் போற்றப்படுகிறார். திருக்குறள் அறம், பொருள், இன்பம் என்ற மூன்று உலகளாவிய விழுமியங்களை பேசுகிறது.",p2:"தமிழ்நாடு அரசு பொது அஞ்சலியாக இந்த மகத்தான சிலையை நிறுவியது. கடல் சங்கமத்திற்கு மேலே எழும் இது, தேசத்தின் தென் முனையை அடைபவர்களுக்கு நிலையான ஞானத்தின் அடையாளம்.",p3:"பல வருடங்கள் திட்டமிடல், கல்வேலைப்பாடு, கடல் பொறியியல் மூலம் இக்கனவு நிறைவேறியது. 2000-ல் திறப்பு ஒரு தனிமையான பாறையை நாட்டின் புகழ்பெற்ற பண்பாட்டு அடையாளமாக மாற்றியது."},
+    tl:{title:"வரலாற்று காலவரிசை",e1y:"சங்க காலம்",e1t:"திருவள்ளுவர் காலம்",e1d:"புலவர் ஞானி வாழ்ந்து தமிழ் சிந்தனையை உருவாக்கும் வரிகளை எழுதுகிறார்.",e2y:"பண்டைய காலம்",e2t:"திருக்குறள் இயற்றப்பட்டது",e2d:"133 அதிகாரங்களில் 1330 குறள்கள்.",e3y:"1975",e3t:"நினைவுச்சின்ன கருத்து",e3d:"கன்னியாகுமரியில் சிலை அமைக்கும் கருத்து உருவானது.",e4y:"1990",e4t:"திட்டமிடல் & வடிவமைப்பு",e4d:"சிற்பி வெ. கணபதி ஸ்தபதி வடிவமைத்தார்.",e5y:"1990s",e5t:"கட்டுமான பயணம்",e5d:"கிரானைட் கற்கள் கரையில் வடிக்கப்பட்டு பாறைக்கு கொண்டு செல்லப்பட்டன.",e6y:"2000",e6t:"திறப்பு விழா",e6d:"2000 ஜனவரி 1 அன்று திறக்கப்பட்டது.",e7y:"இன்று",e7t:"பண்பாட்டு அடையாளம்",e7d:"உலகெங்கிலும் இருந்து வரும் பயணிகளை வரவேற்கிறது."},
+    arch:{kicker:"கட்டடக்கலை",title:"வானை நோக்கிய கிரானைட்",p1:"சிலை 133 அடி உயரம் — 95 அடி வடிக்கப்பட்ட உருவம் 38 அடி பீடத்தின் மேல். ஒவ்வொரு கல்லும் கிரானைட், கடல் காற்றை தாங்கும் திறன் கொண்டது.",p2:"சிற்பிகள் சில்ப சாஸ்திர கொள்கைகளை பின்பற்றி, ஆடைகள், அணிகலன்கள், முக அமைப்பை கையால் வடித்தனர். பீடம் தமிழ் கோவில்களின் மண்டப அமைப்பை பிரதிபலிக்கிறது.",p3:"திறந்த பாறையில் உள்ளதால், வலுவான கடல் காற்றையும் அலைகளையும் தாங்கும் வகையில் கட்டப்பட்டுள்ளது."},
+    sym:{kicker:"குறியீடு",title:"ஒவ்வொரு விவரமும் ஒரு கதை",p1:"133 அடி உயரம் திருக்குறளின் 133 அதிகாரங்களை பிரதிபலிக்கிறது.",p2:"வலது கையின் மூன்று விரல்கள் அறம், பொருள், இன்பம் ஆகிய மூன்று பெரும் கருத்துக்களை குறிக்கின்றன.",p3:"கடல் சங்கமத்தை நோக்கி நிற்கும் ஞானி இங்கு வருபவர்கள் அனைவரையும் ஆசீர்வதிப்பதைப் போல் காட்சி தருகிறார்."},
+    imm:{kicker:"அனுபவம்",title:"பூமியின் முனையில் நிற்பது",p1:"படகிலிருந்து இறங்கினால் — உப்புக்காற்று, விரிந்த வானம், மேலே எழும் கல்லின் அமைதி — ஒரு பெரிய தருணத்தை உணரலாம்.",p2:"சூரிய உதயத்தில் ஞானியின் தோள்களில் பொன் ஒளி விழுகிறது. மாலையில் கடற்கரை முழுவதும் ஒளி பாய்கிறது.",p3:"புகைப்படக்காரர்கள், பக்தர்கள், குடும்பங்கள் — ஒவ்வொருவரும் அளவு, இடம், நோக்கம் என்ற உணர்வுடன் திரும்புகிறார்கள்."},
+    gal:{title:"படத்தொகுப்பு",view:"அனைத்தும் ›"},
+    tips:{title:"பயணிகள் குறிப்புகள்",t1t:"சிறந்த புகைப்படம்",t1d:"சூரிய உதயம் மற்றும் தங்க நேரம் சிறந்த ஒளியை தரும்.",t2t:"நேரம்",t2d:"60–90 நிமிடங்கள் ஒதுக்கவும்.",t3t:"கவனிக்க",t3d:"மூன்று விரல்கள், பீட வடிவமைப்பு.",t4t:"பாதுகாப்பு",t4d:"நல்ல செருப்பு அணியவும் — பாறை ஈரமாக இருக்கும்.",t5t:"பண்பாட்டு மரியாதை",t5d:"அமைதியாக பேசவும்.",t6t:"தூய்மை",t6d:"கழிவுகளை திரும்ப எடுத்துச் செல்லவும்."},
+    near:{title:"அருகில் உள்ள இடங்கள்",n1t:"விவேகானந்தர் பாறை நினைவகம்",n1d:"அமைதியான தியான மண்டபம்.",n2t:"கன்னியாகுமரி கடற்கரை",n2d:"மூன்று கடல்கள் சங்கமிக்கும் வண்ணமணல் கடற்கரை.",n3t:"பகவதி அம்மன் கோவில்",n3d:"நூற்றாண்டுகள் பழமையான புனிதத் தலம்.",n4t:"சூரிய உதய இடம்",n4d:"மறக்க முடியாத விடியல் காட்சிக்கு புகழ்பெற்றது.",n5t:"காந்தி மண்டபம்",n5d:"காந்தியின் அஸ்தி வைக்கப்பட்ட இடத்தில் கட்டப்பட்டது."},
+    cul:{kicker:"பண்பாடு & பாரம்பரியம்",title:"வாழும் தமிழ் மரபு",p1:"தமிழ் பண்பாடு உலகின் பழமையான வாழும் மரபுகளில் ஒன்று. திருவள்ளுவரின் வரிகள் அதன் மையம்.",p2:"கன்னியாகுமரியில் திருவிழாக்கள், கடல் உணவுகள், குடும்ப சடங்குகள் இன்னும் அப்பழமையை காக்கின்றன."},
+    faq:{title:"அடிக்கடி கேட்கப்படும்",items:[
+      ["திருவள்ளுவர் சிலை எங்கே உள்ளது?","கன்னியாகுமரி கடற்கரை அருகில் ஒரு பாறையில் உள்ளது."],
+      ["சிலை எவ்வளவு உயரம்?","மொத்த உயரம் 133 அடி — சிலை 95 அடி, பீடம் 38 அடி."],
+      ["ஏன் 133 அடி?","திருக்குறளின் 133 அதிகாரங்களை பிரதிபலிக்கிறது."],
+      ["யார் வடிவமைத்தார்?","சிற்பி வெ. கணபதி ஸ்தபதி."],
+      ["எப்போது திறக்கப்பட்டது?","2000 ஜனவரி 1 அன்று."],
+      ["எந்த பொருள் பயன்படுத்தப்பட்டது?","கடினமான கிரானைட் கற்கள்."],
+      ["சிலை வரை செல்ல முடியுமா?","ஆம், படகுகள் உள்ளன."],
+      ["சிறந்த பார்வை நேரம்?","காலை மற்றும் மாலை நேரங்கள்."]
+    ]},
+    share:{title:"இந்த வழிகாட்டியை பகிர்",copy:"இணைப்பை நகலெடு",share:"பகிர்",save:"சேமி",bm:"புத்தகக்குறி"},
+    foot:{title:"கன்னியாகுமரி பார்வையிடு",tag:"பிரீமியம் டிஜிட்டல் சுற்றுலா வழிகாட்டி.",by:"கன்னியாகுமரி பார்வையிடு"},
+    nav:{home:"முகப்பு",tips:"குறிப்பு",nearby:"அருகில்",faq:"கேள்வி"}
+  },
+  hi:{
+    brand:{tag:"अन्वेषण",name:"कन्याकुमारी"},
+    hero:{location:"कन्याकुमारी, तमिलनाडु",badge1:"स्मारक",badge2:"शाश्वत ज्ञान",title:"तिरुवल्लुवर<br/>प्रतिमा",sub:"तिरुवल्लुवर की बुद्धिमत्ता और तिरुक्कुरल के शाश्वत मूल्यों को समर्पित एक कालातीत श्रद्धांजलि।",read:"पढ़ने का समय",bookmark:"सहेजें",share:"साझा करें"},
+    audio:{title:"ऑडियो गाइड",langLabel:"(अंग्रेज़ी)",unsupported:"इस डिवाइस पर ऑडियो कथन समर्थित नहीं है।"},
+    qf:{title:"त्वरित तथ्य",all:"सभी देखें ›",height:"कुल ऊँचाई",statue:"प्रतिमा ऊँचाई",pedestal:"आधार ऊँचाई",built:"निर्माता",inaug:"उद्घाटन",feet:"फ़ीट",govt:"तमिलनाडु सरकार"},
+    story:{title:"कहानी",p1:"तमिल साहित्य के कवि-मुनि तिरुवल्लुवर ने तिरुक्कुरल की रचना की — नैतिकता, समृद्धि और प्रेम पर सार्वभौमिक ग्रंथ। 133 फ़ीट की यह प्रतिमा उनकी शाश्वत बुद्धिमत्ता को श्रद्धांजलि है।"},
+    tabs:{history:"इतिहास",arch:"वास्तुकला",sym:"प्रतीकवाद",exp:"अनुभव",gal:"गैलरी",facts:"तथ्य"},
+    facts:{title:"रोचक तथ्य",f1:"प्रतिमा तट से लगभग 500 मीटर दूर एक चट्टानी द्वीप पर है।",f2:"कन्याकुमारी के लगभग हर हिस्से से दिखाई देती है।",f3:"3000 टन से अधिक ग्रेनाइट पत्थर उपयोग हुए।",f4:"तेज़ समुद्री हवाओं और लहरों को झेलने के लिए बनाई गई।",f5:"विश्व की सबसे ऊँची साहित्यिक प्रतिमाओं में से एक।",f6:"उन्नत समुद्री इंजीनियरिंग तकनीकों से निर्मित।"},
+    dyk:{title:"क्या आप जानते हैं?",flip:"↻ पलटें",h1:"देखें",q1:"133 = 133 अध्याय",a1:"प्रतिमा की 133 फ़ीट ऊँचाई तिरुक्कुरल के 133 अध्यायों का सम्मान है।",q2:"शिल्पकार की दृष्टि",a2:"वी. गणपति स्थपति द्वारा डिज़ाइन।",q3:"सहस्राब्दी उपहार",a3:"1 जनवरी 2000 को उद्घाटित।",q4:"तीन महासागर",a4:"तीन जल-निकायों के संगम पर स्थित।"},
+    hist:{kicker:"ऐतिहासिक पृष्ठभूमि",title:"पत्थर में गढ़ा गया मुनि",p1:"तिरुवल्लुवर तमिल साहित्य के महानतम दार्शनिकों में से एक हैं। तिरुक्कुरल — दोहा-आधारित ग्रंथ — धर्म, अर्थ और प्रेम पर समान गरिमा से बात करता है।",p2:"तमिलनाडु सरकार ने इस विरासत को सम्मान देते हुए इस विशाल प्रतिमा का निर्माण कराया। समुद्रों के संगम पर उठती यह प्रतिमा शाश्वत ज्ञान का प्रतीक है।",p3:"वर्षों की योजना, पाषाण-कला और समुद्री इंजीनियरिंग ने इस दृष्टि को साकार किया। 2000 में इसका उद्घाटन एक चट्टानी द्वीप को देश के प्रसिद्ध सांस्कृतिक स्थल में बदल गया।"},
+    tl:{title:"ऐतिहासिक समयरेखा",e1y:"संगम युग",e1t:"तिरुवल्लुवर काल",e1d:"कवि-मुनि जिनकी रचनाएँ सदियों तक तमिल विचार को आकार देती हैं।",e2y:"प्राचीन काल",e2t:"तिरुक्कुरल की रचना",e2d:"133 अध्यायों में 1330 दोहे।",e3y:"1975",e3t:"स्मारक का विचार",e3d:"कन्याकुमारी में प्रतिमा का विचार जन्म लेता है।",e4y:"1990",e4t:"योजना व डिज़ाइन",e4d:"वी. गणपति स्थपति का नेतृत्व।",e5y:"1990 का दशक",e5t:"निर्माण यात्रा",e5d:"ग्रेनाइट खंड तट पर तराशे गए और द्वीप पर एकत्रित।",e6y:"2000",e6t:"उद्घाटन",e6d:"1 जनवरी 2000 को अनावरण।",e7y:"आज",e7t:"सांस्कृतिक स्थल",e7d:"विश्व भर के यात्रियों का स्वागत।"},
+    arch:{kicker:"वास्तुकला",title:"आकाश की ओर ग्रेनाइट",p1:"प्रतिमा 133 फ़ीट ऊँची — 95 फ़ीट की मूर्ति 38 फ़ीट के आधार पर। हर खंड ग्रेनाइट से गढ़ा गया।",p2:"शिल्पकारों ने शिल्प शास्त्र के सिद्धांतों का पालन किया। आधार तमिल मंदिरों के मंडप जैसा है।",p3:"खुले चट्टानी द्वीप पर होने के कारण, संरचना समुद्री हवाओं को झेलने के लिए बनाई गई।"},
+    sym:{kicker:"प्रतीकवाद",title:"हर विवरण एक कहानी",p1:"133 फ़ीट ऊँचाई तिरुक्कुरल के 133 अध्यायों का प्रतिबिंब है।",p2:"दाहिने हाथ की तीन उठी हुई उंगलियाँ — अरम, पोरुल और इनबम — का प्रतीक हैं।",p3:"समुद्रों के संगम की ओर मुख करके मुनि यहाँ आने वालों को आशीर्वाद देते हुए प्रतीत होते हैं।"},
+    imm:{kicker:"अनुभव",title:"धरती के छोर पर",p1:"नौका से उतरते ही महसूस होता है — नमकीन हवा, विस्तृत आकाश, ऊपर उठता पत्थर का शांत भार।",p2:"सूर्योदय में मुनि के कंधों पर सुनहरी रोशनी फैलती है; सूर्यास्त में पूरा तट चमक उठता है।",p3:"फ़ोटोग्राफर, तीर्थयात्री, परिवार — सभी एक ही अनुभूति लेकर लौटते हैं।"},
+    gal:{title:"गैलरी",view:"सभी ›"},
+    tips:{title:"यात्री सुझाव",t1t:"श्रेष्ठ फ़ोटोग्राफी",t1d:"सूर्योदय और गोल्डन आवर।",t2t:"समय",t2d:"60–90 मिनट रखें।",t3t:"देखें",t3d:"तीन उंगलियाँ, आधार की नक्काशी।",t4t:"सुरक्षा",t4d:"अच्छे जूते पहनें।",t5t:"संस्कृति का सम्मान",t5d:"शांत रहें।",t6t:"स्वच्छता",t6d:"कचरा वापस ले जाएँ।"},
+    near:{title:"पास के आकर्षण",n1t:"विवेकानंद रॉक स्मारक",n1d:"शांत ध्यान कक्ष।",n2t:"कन्याकुमारी समुद्र तट",n2d:"तीन समुद्रों का संगम।",n3t:"भगवती अम्मन मंदिर",n3d:"सदियों पुराना मंदिर।",n4t:"सूर्योदय दृश्य बिंदु",n4d:"अविस्मरणीय भोर।",n5t:"गांधी स्मारक",n5d:"गांधी की अस्थियों का स्थल।"},
+    cul:{kicker:"संस्कृति व विरासत",title:"जीवंत तमिल विरासत",p1:"तमिल संस्कृति विश्व की सबसे प्राचीन जीवंत परंपराओं में से एक है।",p2:"कन्याकुमारी के त्यौहार, तटीय व्यंजन आज भी उसी विरासत को जीवित रखते हैं।"},
+    faq:{title:"अक्सर पूछे जाने वाले",items:[
+      ["प्रतिमा कहाँ स्थित है?","कन्याकुमारी तट के पास एक चट्टानी द्वीप पर।"],
+      ["ऊँचाई कितनी है?","कुल 133 फ़ीट — 95 फ़ीट मूर्ति, 38 फ़ीट आधार।"],
+      ["133 फ़ीट क्यों?","तिरुक्कुरल के 133 अध्यायों के सम्मान में।"],
+      ["डिज़ाइन किसने किया?","शिल्पकार वी. गणपति स्थपति।"],
+      ["उद्घाटन कब हुआ?","1 जनवरी 2000।"],
+      ["सामग्री क्या है?","कठोर ग्रेनाइट पत्थर।"],
+      ["क्या पास जा सकते हैं?","हाँ, नौकाएँ चलती हैं।"],
+      ["सबसे अच्छा समय?","सुबह और शाम।"]
+    ]},
+    share:{title:"साझा करें",copy:"लिंक कॉपी",share:"साझा",save:"सहेजें",bm:"बुकमार्क"},
+    foot:{title:"अन्वेषण कन्याकुमारी",tag:"प्रीमियम डिजिटल पर्यटन गाइड।",by:"अन्वेषण कन्याकुमारी"},
+    nav:{home:"होम",tips:"सुझाव",nearby:"पास",faq:"प्रश्न"}
+  }
+};
+
+/* Helper: resolve dotted path e.g. "hero.title" */
+function get(obj,path){return path.split('.').reduce((o,k)=>o&&o[k],obj)}
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+let LANG='en';
+function applyLang(code){
+  LANG=code;
+  const dict=T[code];
+  document.documentElement.setAttribute('lang',code);
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v=get(dict,el.dataset.i18n);
+    if(typeof v==='string') el.innerHTML=v;
+  });
+  document.getElementById('langLabel').textContent={en:'English',ta:'தமிழ்',hi:'हिन्दी'}[code];
+  const audioBarEl=document.getElementById('audioBar');
+  const audioNoteEl=document.getElementById('audioNote');
+  if(code==='en'){
+    audioBarEl.style.display='';
+    if(supportsSpeech){audioNoteEl.classList.remove('show');}
+  }else{
+    stop();
+    audioBarEl.style.display='none';
+    audioNoteEl.classList.remove('show');
+  }
+  buildNarrationQueue();
+}
+document.getElementById('langSel').addEventListener('change',e=>applyLang(e.target.value));
+
+
+/* =========================================================
+   SCROLL PROGRESS + STICKY HEADER
+========================================================= */
+const bar=document.getElementById('progressBar');
+const hdr=document.getElementById('header');
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const p=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  bar.style.width=p+'%';
+  hdr.classList.toggle('scrolled',h.scrollTop>10);
+},{passive:true});
+
+/* =========================================================
+   REVEAL ON SCROLL
+========================================================= */
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* =========================================================
+   FLIP CARDS
+========================================================= */
+document.querySelectorAll('.flip').forEach(f=>{
+  f.addEventListener('click',()=>f.classList.toggle('on'));
+});
+
+/* =========================================================
+   WAVE BARS
+========================================================= */
+(function(){
+  const w=document.getElementById('wave');
+  const N=60;
+  for(let i=0;i<N;i++){const b=document.createElement('i');b.style.height=(4+Math.random()*18)+'px';w.appendChild(b);}
+})();
+function animateWave(active){
+  const bars=document.querySelectorAll('#wave i');
+  bars.forEach(b=>{b.style.height=(active?4+Math.random()*22:4+Math.random()*10)+'px';});
+}
+setInterval(()=>animateWave(playing),160);
+
+/* =========================================================
+   AUDIO NARRATION (Web Speech API)
+========================================================= */
+const supportsSpeech='speechSynthesis' in window;
+const audioBar=document.getElementById('audioBar');
+const audioNote=document.getElementById('audioNote');
+if(!supportsSpeech){
+  audioBar.style.opacity=.5;audioBar.style.pointerEvents='none';
+  audioNote.classList.add('show');
+}
+let queue=[];   // array of {el, text}
+let idx=0, playing=false, paused=false, rate=1;
+let startTime=0, elapsed=0, totalEstimate=0, ticker=null;
+
+function buildNarrationQueue(){
+  queue=[];
+  document.querySelectorAll('[data-narrate]').forEach(el=>{
+    // wrap sentences in spans for highlight sync
+    el.innerHTML=el.textContent.split(/(?<=[.!?])\s+/).map(s=>`<span class="sent">${s}</span>`).join(' ');
+    el.querySelectorAll('.sent').forEach(sp=>queue.push({el:sp,text:sp.textContent}));
+  });
+  totalEstimate=queue.reduce((a,q)=>a+Math.max(2,q.text.split(/\s+/).length*0.38),0);
+  document.getElementById('totTime').textContent=fmt(totalEstimate);
+}
+function fmt(s){s=Math.max(0,Math.round(s));return String((s/60)|0).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+
+function clearHighlight(){document.querySelectorAll('.sent.spk').forEach(x=>x.classList.remove('spk'))}
+function highlight(i){
+  clearHighlight();
+  const cur=queue[i];if(!cur)return;
+  cur.el.classList.add('spk');
+  const r=cur.el.getBoundingClientRect();
+  if(r.top<80||r.bottom>window.innerHeight-160){
+    cur.el.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+
+function speakFrom(i){
+  if(!supportsSpeech||i>=queue.length){stop();return;}
+  idx=i;
+  const u=new SpeechSynthesisUtterance(queue[i].text);
+  u.rate=rate;u.lang='en-US';
+  u.onstart=()=>{highlight(i);};
+  u.onend=()=>{if(playing&&!paused)speakFrom(i+1);};
+  speechSynthesis.speak(u);
+}
+function play(){
+  if(!supportsSpeech)return;
+  if(paused){speechSynthesis.resume();paused=false;playing=true;setPlayIcon(true);startTicker();return;}
+  playing=true;paused=false;setPlayIcon(true);
+  startTicker();
+  speechSynthesis.cancel();
+  speakFrom(idx||0);
+}
+function pause(){
+  if(!supportsSpeech)return;
+  if(playing&&!paused){speechSynthesis.pause();paused=true;playing=false;setPlayIcon(false);stopTicker();}
+}
+function stop(){playing=false;paused=false;setPlayIcon(false);speechSynthesis&&speechSynthesis.cancel();clearHighlight();stopTicker();}
+function setPlayIcon(isPlaying){
+  document.getElementById('playIcon').innerHTML=isPlaying
+    ?'<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>'
+    :'<path d="M8 5v14l11-7z"/>';
+}
+function startTicker(){
+  startTime=Date.now()-elapsed*1000;
+  stopTicker();
+  ticker=setInterval(()=>{
+    elapsed=(Date.now()-startTime)/1000;
+    document.getElementById('curTime').textContent=fmt(elapsed);
+    document.getElementById('audioFill').style.width=Math.min(100,(elapsed/totalEstimate)*100)+'%';
+    if(elapsed>=totalEstimate)stop();
+  },250);
+}
+function stopTicker(){if(ticker){clearInterval(ticker);ticker=null}}
+
+document.getElementById('playBtn').addEventListener('click',()=>{playing?pause():play()});
+window.__togglePlay=()=>{playing?pause():play()};
+document.getElementById('prevBtn').addEventListener('click',()=>{elapsed=0;idx=Math.max(0,idx-3);if(playing){speechSynthesis.cancel();speakFrom(idx);}});
+document.getElementById('nextBtn').addEventListener('click',()=>{idx=Math.min(queue.length-1,idx+3);if(playing){speechSynthesis.cancel();speakFrom(idx);}});
+const speeds=[1,1.25,1.5,0.75];let si=0;
+document.getElementById('speedBtn').addEventListener('click',(e)=>{si=(si+1)%speeds.length;rate=speeds[si];e.currentTarget.textContent=rate+'x';if(playing){speechSynthesis.cancel();speakFrom(idx);}});
+document.getElementById('audioProgress').addEventListener('click',(e)=>{
+  const r=e.currentTarget.getBoundingClientRect();
+  const pct=(e.clientX-r.left)/r.width;
+  idx=Math.floor(pct*queue.length);elapsed=pct*totalEstimate;
+  if(playing){speechSynthesis.cancel();speakFrom(idx);}else{highlight(idx);}
+});
+
+/* =========================================================
+   LIGHTBOX
+========================================================= */
+const gs=[...document.querySelectorAll('#gallery .g')].sort((a,b)=>(+a.dataset.order||0)-(+b.dataset.order||0));
+const lb=document.getElementById('lightbox'),lbImg=document.getElementById('lbImg'),lbCap=document.getElementById('lbCap');
+let lbi=0;
+function openLB(i){lbi=i;lbImg.src=gs[i].querySelector('img').src;lbCap.textContent=gs[i].dataset.cap||'';lb.classList.add('on');}
+function nav(d){lbi=(lbi+d+gs.length)%gs.length;openLB(lbi);}
+gs.forEach((g,i)=>g.addEventListener('click',()=>openLB(i)));
+document.getElementById('lbClose').addEventListener('click',()=>lb.classList.remove('on'));
+document.getElementById('lbPrev').addEventListener('click',()=>nav(-1));
+document.getElementById('lbNext').addEventListener('click',()=>nav(1));
+lb.addEventListener('click',(e)=>{if(e.target===lb)lb.classList.remove('on')});
+
+/* =========================================================
+   BOOT
+========================================================= */
+applyLang('en');
+</script>
+</body>
+</html>
