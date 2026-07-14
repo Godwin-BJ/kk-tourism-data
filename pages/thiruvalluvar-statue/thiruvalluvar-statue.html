@@ -175,7 +175,7 @@ section{padding:36px 20px;position:relative}
 .qf__card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
 .qf__ico{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff}
 .qf__ico svg{width:20px;height:20px}
-.qf__label{font-size:12px;color:var(--muted);font-weight:500}
+.qf__label{font-size:12px;color:var(--muted);font-weight:500;overflow-wrap:break-word;word-break:break-word}
 .qf__value{font-size:22px;font-weight:800;line-height:1.05}
 .qf__unit{font-size:12px;color:var(--muted);font-weight:500}
 
@@ -183,14 +183,14 @@ section{padding:36px 20px;position:relative}
    STORY / OVERVIEW
 ========================================================= */
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
-.story{display:flex;gap:18px;align-items:flex-start}
-.story__text{flex:1;min-width:0}
-.story__text p{font-size:15px;color:var(--muted)}
+.story{overflow:hidden}
+.story::after{content:"";display:table;clear:both}
+.story p{font-size:15px;color:var(--muted)}
 .dropcap::first-letter{
-  font-family:Georgia,serif;float:left;font-size:56px;line-height:.85;padding:6px 10px 0 0;
+  font-family:Georgia,serif;font-size:1.9em;line-height:1;
   color:var(--primary);font-weight:800;
 }
-.story__img{width:118px;height:158px;border-radius:16px;object-fit:cover;flex:0 0 auto;box-shadow:var(--shadow)}
+.story__img{width:118px;height:158px;border-radius:16px;object-fit:cover;box-shadow:var(--shadow);float:right;margin:0 0 12px 16px}
 
 /* =========================================================
    TABS
@@ -206,16 +206,16 @@ section{padding:36px 20px;position:relative}
 /* =========================================================
    FACTS
 ========================================================= */
-.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-width:0}
 .fact{
   background:var(--bg-soft);border-radius:16px;padding:14px 10px;text-align:center;
   display:flex;flex-direction:column;align-items:center;gap:8px;min-height:150px;
-  transition:transform .25s,box-shadow .25s;border:1px solid transparent;
+  transition:transform .25s,box-shadow .25s;border:1px solid transparent;min-width:0;
 }
 .fact:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--line)}
 .fact__ico{width:44px;height:44px;display:grid;place-items:center}
 .fact__ico svg{width:32px;height:32px}
-.fact p{font-size:11.5px;color:var(--text);line-height:1.35;margin:0;font-weight:500}
+.fact p{font-size:11.5px;color:var(--text);line-height:1.35;margin:0;font-weight:500;overflow-wrap:break-word;word-break:break-word;width:100%}
 
 /* =========================================================
    DID YOU KNOW - FLIP CARDS
@@ -273,8 +273,8 @@ section{padding:36px 20px;position:relative}
 .near{flex:0 0 auto;width:220px;background:#fff;border-radius:22px;overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid var(--line);scroll-snap-align:start}
 .near__img{width:100%;height:130px;object-fit:cover}
 .near__body{padding:12px 14px 16px}
-.near__title{font-size:14px;font-weight:700;margin:0 0 4px}
-.near__desc{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+.near__title{font-size:14px;font-weight:700;margin:0 0 4px;overflow-wrap:break-word;word-break:break-word}
+.near__desc{font-size:12px;color:var(--muted);margin:0;line-height:1.4;overflow-wrap:break-word;word-break:break-word}
 
 /* =========================================================
    FAQ
@@ -483,11 +483,9 @@ footer strong{color:var(--primary-2)}
 <section class="reveal">
   <div class="card">
     <div class="story">
-      <div class="story__text">
-        <h2 class="section-title" style="font-size:22px;margin-bottom:10px" data-i18n="story.title">The Story</h2>
-        <p class="dropcap" data-narrate data-i18n="story.p1">Thiruvalluvar, the poet-sage of Tamil literature, authored the Thirukkural, a universal scripture on virtue, wealth and love. The 133-feet statue stands as a tribute to his timeless wisdom that transcends all boundaries.</p>
-      </div>
       <img src="assets/story.jpg" alt="" loading="lazy" class="story__img"/>
+      <h2 class="section-title" style="font-size:22px;margin-bottom:10px" data-i18n="story.title">The Story</h2>
+      <p class="dropcap" data-narrate data-i18n="story.p1">Thiruvalluvar, the poet-sage of Tamil literature, authored the Thirukkural, a universal scripture on virtue, wealth and love. The 133-feet statue stands as a tribute to his timeless wisdom that transcends all boundaries.</p>
     </div>
   </div>
 </section>
