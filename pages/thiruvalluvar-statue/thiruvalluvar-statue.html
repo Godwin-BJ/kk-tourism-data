@@ -111,7 +111,7 @@ section{padding:36px 20px;position:relative}
 .badge{padding:7px 14px;border-radius:8px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#fff}
 .badge--mon{background:var(--primary)}
 .badge--wis{background:var(--accent)}
-.hero__title{font-size:clamp(40px,11vw,56px);font-weight:800;line-height:1;letter-spacing:-.02em;margin:6px 0 12px;font-family:Georgia,'SF Pro Display',serif;text-shadow:0 4px 24px rgba(0,0,0,.35);animation:fadeUp .9s .3s both}
+.hero__title{font-size:clamp(36px,10vw,56px);font-weight:800;line-height:1.05;letter-spacing:-.02em;margin:6px 0 12px;font-family:Georgia,'SF Pro Display',serif;text-shadow:0 4px 24px rgba(0,0,0,.35);animation:fadeUp .9s .3s both;overflow-wrap:break-word;word-break:break-word;max-width:100%}
 .hero__sub{font-size:15px;opacity:.92;max-width:26ch;animation:fadeUp .9s .5s both}
 .hero__meta{display:flex;align-items:center;gap:18px;margin-top:22px;flex-wrap:wrap;animation:fadeUp .9s .7s both}
 .meta{display:flex;align-items:center;gap:8px;font-size:13px;color:#fff}
@@ -340,9 +340,13 @@ footer strong{color:var(--primary-2)}
 .lightbox__cap{position:absolute;bottom:24px;left:0;right:0;text-align:center;color:#fff;font-size:13px;opacity:.9;padding:0 20px}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-@media (max-width:360px){
+@media (max-width:480px){
   .facts{grid-template-columns:repeat(2,1fr)}
   .tabs{grid-template-columns:repeat(3,1fr)}
+  .audio{flex-wrap:wrap;row-gap:12px}
+  .audio__main{flex:1 1 auto;min-width:0}
+  .audio__ctrls{flex:1 0 100%;justify-content:center}
+  .audio__title{white-space:normal;overflow-wrap:break-word}
 }
 </style>
 </head>
